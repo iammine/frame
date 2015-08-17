@@ -13,7 +13,7 @@ import com.gzy.frame.test1.mapper.UserMapper;
 import com.gzy.frame.test1.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring_mybatis.xml"})
+@ContextConfiguration(locations = {"classpath:spring/spring_mybatis.xml"})
 public class MybatisTest {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
