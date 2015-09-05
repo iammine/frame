@@ -1,5 +1,7 @@
 package com.gzy.frame.common.redis.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import redis.clients.jedis.Jedis;
@@ -10,6 +12,8 @@ import com.gzy.frame.common.redis.IRedisService;
 
 @Service
 public class RedisServiceImpl implements IRedisService {
+	private final static Logger logger = LoggerFactory.getLogger(RedisServiceImpl.class);
+	
 	private static JedisPool jedisPool;
 	public static JedisPool getJedisPool(){
 		if(jedisPool == null){
@@ -30,9 +34,18 @@ public class RedisServiceImpl implements IRedisService {
 	}
 
 	public String getStr(String key) {
+		if(key == null || "".equals(key)){
+			logger.debug("redis key is null");
+			return null;
+		}
 		Jedis jedis = getJedisPool().getResource();
 		return jedis.get(key);
 	}
-	
+
+	public boolean setStrExpiry(String key, String value, int seconds) {
+		Jedis jedis = getJedisPool().getResource();
+		jedis.setex(key, seconds, value);
+		return true;
+	}
 	
 }
